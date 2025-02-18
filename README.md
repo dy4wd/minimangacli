@@ -1,3 +1,3 @@
 # minimangacli
 
-Консольная программа для уменьшения размера манги путём: преобразования сканов в формат `webp`, очисткой exif данных, упаковкой в zip архив.
+A console program for reducing the size of manga by: converting scans to `webp` format and clearing `exif` data.
