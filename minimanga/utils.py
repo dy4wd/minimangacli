@@ -1,5 +1,7 @@
 from pathlib import Path
 
+from exceptions import SpecifiedPathNotFolder
+
 
 def check_path(path: Path) -> Path:
     """Checks whether the specified path is a folder."""
