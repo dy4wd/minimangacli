@@ -1,9 +1,9 @@
 import sys
 import asyncio
 
-from minimanga import utils
-from minimanga.console import get_command_line_arguments
-from minimanga.exceptions import SpecifiedPathNotFolder
+import utils
+from console import get_command_line_arguments
+from exceptions import SpecifiedPathNotFolder, ImagesNotFound
 
 
 async def main():
@@ -14,8 +14,14 @@ async def main():
     except SpecifiedPathNotFolder:
         print("The specified path is not a folder.", file=sys.stderr)
         sys.exit(1)
-    
+
     files = utils.get_all_files(target_folder)
+
+    try:
+        images = utils.sort_images(files)
+    except ImagesNotFound:
+        print("Images not found.", file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":
