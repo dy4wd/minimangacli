@@ -12,7 +12,7 @@ async def main():
     try:
         target_folder = utils.path_handler(cli_args.path)
     except SpecifiedPathNotFolder:
-        print("The specified path is not a folder.", file=sys.stderr)
+        sys.stderr.write("The specified path is not a folder.\n")
         sys.exit(1)
 
     files = utils.get_all_files(target_folder)
@@ -20,7 +20,7 @@ async def main():
     try:
         images = utils.sort_images(files)
     except ImagesNotFound:
-        print("Images not found.", file=sys.stderr)
+        sys.stderr.write("Images not found.\n")
         sys.exit(1)
 
 
