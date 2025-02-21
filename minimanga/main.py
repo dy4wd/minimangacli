@@ -10,7 +10,7 @@ async def main():
     cli_args = get_command_line_arguments()
 
     try:
-        target_folder = utils.check_path(cli_args.path)
+        target_folder = utils.path_handler(cli_args.path)
     except SpecifiedPathNotFolder:
         print("The specified path is not a folder.", file=sys.stderr)
         sys.exit(1)
