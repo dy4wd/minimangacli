@@ -15,10 +15,8 @@ async def main():
         sys.stderr.write("The specified path is not a folder.\n")
         sys.exit(1)
 
-    files = utils.get_all_files(target_folder)
-
     try:
-        images = utils.sort_images(files)
+        images = utils.get_all_images(target_folder)
     except ImagesNotFound:
         sys.stderr.write("Images not found.\n")
         sys.exit(1)

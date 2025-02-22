@@ -16,18 +16,19 @@ def path_handler(path: Path) -> Path:
     return path.absolute()
 
 
-def get_all_files(folder: Path) -> Files:
-    """Collects all files in the specified folder."""
-    return folder.glob("**/*")
-
-
-def sort_images(files: Files) -> Images:
+def get_all_images(folder: Path) -> Images:
     """Selects images from all found files."""
-    print("Image search...")
+    files = _get_all_files(folder)
     images = []
+    print("Image search...")
     for file in files:
         if file.suffix in config.IMAGES_SUFFIXES:
             images.append(file)
     if len(images) == 0:
         raise ImagesNotFound
     return images
+
+
+def _get_all_files(folder: Path) -> Files:
+    """Collects all files in the specified folder."""
+    return folder.glob("**/*")
