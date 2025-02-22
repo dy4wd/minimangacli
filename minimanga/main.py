@@ -17,7 +17,7 @@ async def main():
         sys.exit(1)
 
     try:
-        images = utils.get_all_images(target_folder)
+        images = utils.get_images(target_folder)
     except ImagesNotFound:
         sys.stderr.write("Images not found.\n")
         sys.exit(1)

@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Generator, Sequence
+from typing import Callable, Generator, Sequence
 
 import config
 from exceptions import ImagesNotFound, SpecifiedPathNotFolder
@@ -16,9 +16,9 @@ def path_handler(path: Path) -> Path:
     return path.absolute()
 
 
-def get_all_images(folder: Path) -> Images:
+def get_images(folder: Path) -> Images:
     """Selects images from all found files."""
-    files = _get_all_files(folder)
+    files = _get_files(folder)
     images = []
     print("Image search...")
     for file in files:
@@ -29,6 +29,5 @@ def get_all_images(folder: Path) -> Images:
     return images
 
 
-def _get_all_files(folder: Path) -> Files:
-    """Collects all files in the specified folder."""
-    return folder.glob("**/*")
+_get_files: Callable[[Path], Files] = lambda folder: folder.rglob("*")
+
