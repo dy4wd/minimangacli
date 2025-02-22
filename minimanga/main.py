@@ -1,6 +1,7 @@
 import sys
 import asyncio
 
+from minimanga import config
 import utils
 from console import get_command_line_arguments
 from exceptions import SpecifiedPathNotFolder, ImagesNotFound
@@ -20,6 +21,8 @@ async def main():
     except ImagesNotFound:
         sys.stderr.write("Images not found.\n")
         sys.exit(1)
+
+    folder_to_save = target_folder.with_name(f"{target_folder.name}{config.SUFFIX_FOLDER_TO_SAVE}")
 
 
 if __name__ == "__main__":
