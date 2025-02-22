@@ -22,7 +22,7 @@ async def main():
         sys.exit(1)
 
     folder_to_save = utils.create_folder_to_save(target_folder)
-    print(folder_to_save)
+
 
 if __name__ == "__main__":
     asyncio.run(main())
