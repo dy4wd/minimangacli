@@ -1,12 +1,11 @@
 import sys
-import asyncio
 
 import utils
 from console import get_command_line_arguments
 from exceptions import SpecifiedPathNotFolder, ImagesNotFound
 
 
-async def main():
+def main():
     cli_args = get_command_line_arguments()
 
     try:
@@ -25,4 +24,4 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
