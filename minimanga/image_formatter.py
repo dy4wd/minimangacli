@@ -13,3 +13,7 @@ class DataForFormatter:
 
 def format_images(data: DataForFormatter):
     pass
+
+
+def _generate_path_to_save(folder_to_save: Path, image: Path):
+    pass
