@@ -30,12 +30,3 @@ def get_images(folder: Path) -> Images:
 
 
 _get_files: Callable[[Path], Files] = lambda folder: folder.rglob("*")
-
-
-def create_folder_to_save(target: Path) -> Path:
-    path_folder_to_save = target.with_name(
-        f"{target.name}{config.SUFFIX_FOLDER_TO_SAVE}"
-    )
-    if not path_folder_to_save.exists():
-        path_folder_to_save.mkdir()
-    return path_folder_to_save

@@ -25,7 +25,6 @@ def _generate_path_to_save(manga_name: str, image: Path) -> Path:
     return path_to_save
 
 
-_change_suffix: Callable[[Path], Path] = lambda image: image.with_suffix(config.WEBP_SUFFIX)
-
-
-
+_change_suffix: Callable[[Path], Path] = lambda image: image.with_suffix(
+    config.WEBP_SUFFIX
+)

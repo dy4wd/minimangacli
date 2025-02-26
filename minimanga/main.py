@@ -20,8 +20,6 @@ def main():
         sys.stderr.write("Images not found.\n")
         sys.exit(1)
 
-    folder_to_save = utils.create_folder_to_save(target_folder)
-
 
 if __name__ == "__main__":
     main()
