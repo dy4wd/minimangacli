@@ -3,7 +3,7 @@ import argparse
 from pathlib import Path
 from dataclasses import dataclass
 
-import config
+from . import config
 
 
 @dataclass(frozen=True, slots=True)

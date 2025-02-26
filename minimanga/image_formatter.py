@@ -1,7 +1,7 @@
 from pathlib import Path
 from dataclasses import dataclass
 
-from utils import Images
+from .utils import Images
 
 
 @dataclass(frozen=True, slots=True)

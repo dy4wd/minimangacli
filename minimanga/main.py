@@ -1,8 +1,8 @@
 import sys
 
-import utils
-from console import get_command_line_arguments
-from exceptions import SpecifiedPathNotFolder, ImagesNotFound
+from . import utils
+from .console import get_command_line_arguments
+from .exceptions import SpecifiedPathNotFolder, ImagesNotFound
 
 
 def main():

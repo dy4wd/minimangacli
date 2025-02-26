@@ -1,8 +1,8 @@
 from pathlib import Path
 from typing import Callable, Generator, Sequence
 
-import config
-from exceptions import ImagesNotFound, SpecifiedPathNotFolder
+from . import config
+from .exceptions import ImagesNotFound, SpecifiedPathNotFolder
 
 
 Files = Generator[Path, None, None]
