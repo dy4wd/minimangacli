@@ -20,6 +20,8 @@ def main():
         sys.stderr.write("Images not found.\n")
         sys.exit(1)
 
+    path_to_save = path_handler.generate_path_to_save(cli.path)
+
 
 if __name__ == "__main__":
     main()
