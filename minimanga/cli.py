@@ -14,7 +14,7 @@ class CLIArguments:
 
 def get_arguments() -> CLIArguments:
     cli_args = _create_command_line_argument_parser()
-    return CLIArguments(path=cli_args.path, quality=cli_args.quality)
+    return CLIArguments(path=cli_args.path.absolute(), quality=cli_args.quality)
 
 
 def _create_command_line_argument_parser() -> argparse.Namespace:
