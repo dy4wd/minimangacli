@@ -1,7 +1,6 @@
 import sys
 
-from . import utils
-from . import path_handler
+from . import cli, path_handler, image_parser
 from .cli import get_arguments
 from .exceptions import SpecifiedPathNotFolder, ImagesNotFound
 
@@ -16,7 +15,7 @@ def main():
         sys.exit(1)
 
     try:
-        images = utils.get_images(cli.path.absolute())
+        img_locations = image_parser.get_all_paths_to_images(cli.path.rglob("*"))
     except ImagesNotFound:
         sys.stderr.write("Images not found.\n")
         sys.exit(1)

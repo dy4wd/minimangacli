@@ -6,20 +6,15 @@ from .exceptions import ImagesNotFound
 
 
 Files = Generator[Path, None, None]
-Images = Sequence[Path]
+ImgLocations = Sequence[Path]
 
 
-def get_images(folder: Path) -> Images:
-    """Selects images from all found files."""
-    files = _get_files(folder)
-    images = []
+def get_all_paths_to_images(files: Files) -> ImgLocations:
+    img_locations = []
     print("Image search...")
     for file in files:
         if file.suffix in config.IMAGES_SUFFIXES:
-            images.append(file)
-    if len(images) == 0:
+            img_locations.append(file)
+    if len(img_locations) == 0:
         raise ImagesNotFound
-    return images
-
-
-_get_files: Callable[[Path], Files] = lambda folder: folder.rglob("*")
+    return img_locations
