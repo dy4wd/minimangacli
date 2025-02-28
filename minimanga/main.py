@@ -1,15 +1,15 @@
 import sys
 
 from . import utils
-from .console import get_command_line_arguments
+from .cli import get_arguments
 from .exceptions import SpecifiedPathNotFolder, ImagesNotFound
 
 
 def main():
-    cli_args = get_command_line_arguments()
+    cli = get_arguments()
 
     try:
-        target_folder = utils.path_handler(cli_args.path)
+        target_folder = utils.path_handler(cli.path)
     except SpecifiedPathNotFolder:
         sys.stderr.write("The specified path is not a folder.\n")
         sys.exit(1)

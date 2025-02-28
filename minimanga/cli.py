@@ -12,7 +12,7 @@ class CLIArguments:
     quality: int
 
 
-def get_command_line_arguments() -> CLIArguments:
+def get_arguments() -> CLIArguments:
     cli_args = _create_command_line_argument_parser()
     return CLIArguments(path=cli_args.path, quality=cli_args.quality)
 
