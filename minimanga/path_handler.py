@@ -10,4 +10,6 @@ def is_dir(path: Path):
 
 
 def generate_path_to_save(target_folder: Path) -> Path:
-    return target_folder.with_name(f"{target_folder.name}{config.SUFFIX_FOLDER_TO_SAVE}")
+    return target_folder.with_name(
+        f"{target_folder.name}{config.SUFFIX_FOLDER_TO_SAVE}"
+    )

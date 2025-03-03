@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Callable, Generator, Sequence
+from typing import Generator, Sequence
 
 from . import config
 from .exceptions import ImagesNotFound
