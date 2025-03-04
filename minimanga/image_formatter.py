@@ -42,7 +42,7 @@ def format_images(args: ArgsFormatter):
         save_as.parent.mkdir(parents=True, exist_ok=True)
         img.save(save_as, quality=args.quality)
         img.close()
-        print(index+1, len(args.images))
+        print(index + 1, len(args.images))
 
 
 _change_suffix: Callable[[Path, str], Path] = lambda image, suffix: image.with_suffix(
