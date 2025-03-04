@@ -17,4 +17,5 @@ def get_all_paths_to_images(files: Files) -> ImgLocations:
             img_locations.append(file)
     if len(img_locations) == 0:
         raise ImagesNotFound
+    print("Done.")
     return img_locations

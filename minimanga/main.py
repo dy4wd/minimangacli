@@ -1,6 +1,6 @@
 import sys
 
-from . import cli, path_handler, path_collector, image_formatter
+from . import cli, path_handler, path_collector, image_converter
 from .exceptions import SpecifiedPathNotFolder, ImagesNotFound
 
 
@@ -21,12 +21,11 @@ def main():
 
     folder_to_save = path_handler.generate_path_to_save(cli_args.path)
 
-    image_formatter.format_images(
-        image_formatter.ArgsFormatter(
-            image_formatter.Folders(target=cli_args.path, to_save=folder_to_save),
-            images=images,
-            quality=cli_args.quality,
-        )
+    image_converter.convert(
+        target_path=cli_args.path,
+        path_to_save=folder_to_save,
+        images=images,
+        quality=cli_args.quality,
     )
 
 
