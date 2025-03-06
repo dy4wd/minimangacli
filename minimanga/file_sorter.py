@@ -8,16 +8,16 @@ from .exceptions import ImagesNotFound
 
 
 Files = Generator[Path, None, None]
-ImgLocations = Sequence[Path]
+Images = Sequence[Path]
 
 
-def get_all_paths_to_images(files: Files) -> ImgLocations:
-    img_locations = []
+def find_images(files: Files) -> Images:
+    images = []
     sys.stdout.write("Image search...")
     for file in files:
         if file.suffix in config.IMAGES_SUFFIXES:
-            img_locations.append(file)
-    if len(img_locations) == 0:
+            images.append(file)
+    if len(images) == 0:
         raise ImagesNotFound
     sys.stdout.write("\rImage search... Done.\n")
-    return img_locations
+    return images

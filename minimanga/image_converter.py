@@ -1,35 +1,33 @@
 import sys
 
 from pathlib import Path
-from typing import Callable
 
-from PIL import Image
+from PIL import Image as Img, ImageFile
 
-from . import config
-from .path_collector import ImgLocations
+from . import config, path_handler
+from .file_sorter import Images
 
 
-def convert(target_path: Path, path_to_save: Path, images: ImgLocations, quality: int):
-    path_to_save.mkdir(exist_ok=True)
+def run(target_folder: Path, images: Images, quality: int):
     for index, image in enumerate(images):
         sys.stdout.write(f"\rConvert image {index+1} of {len(images)}")
-        img = Image.open(image)
-        if max(img.size) > config.MAX_SIZE_WEBP:
-            save_as = Path(
-                path_to_save,
-                _change_suffix(image.relative_to(target_path), config.JPEG_SUFFIX),
-            )
-        else:
-            save_as = Path(
-                path_to_save,
-                _change_suffix(image.relative_to(target_path), config.WEBP_SUFFIX),
-            )
-        save_as.parent.mkdir(parents=True, exist_ok=True)
-        img.save(save_as, quality=quality)
-        img.close()
+        dist_folder = path_handler.create_path_to_dist_folder(target_folder)
+        save_as = path_handler.create_path_to_save_image(
+            target_folder, dist_folder, image
+        )
+        _convert_image(image, quality, save_as)
     sys.stdout.write(f"\nDone.\n")
 
 
-_change_suffix: Callable[[Path, str], Path] = lambda image, suffix: image.with_suffix(
-    suffix
-)
+def _convert_image(image: Path, quality: int, save_as: Path):
+    with Img.open(image) as img:
+        if max(img.size) > config.MAX_SIZE_WEBP:
+            alt_save_as = path_handler.change_suffix(save_as, config.ALT_IMAGE_SUFFIX)
+            _save_image(img, quality, alt_save_as)
+        else:
+            _save_image(img, quality, save_as)
+
+
+def _save_image(imagefile: ImageFile.ImageFile, quality: int, save_as: Path):
+    save_as.parent.mkdir(parents=True, exist_ok=True)
+    imagefile.save(save_as, format=save_as.suffix[1:], quality=quality)

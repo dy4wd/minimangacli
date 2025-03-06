@@ -1,6 +1,6 @@
 import sys
 
-from . import cli, path_handler, path_collector, image_converter
+from . import cli, path_handler, file_sorter, image_converter
 from .exceptions import SpecifiedPathNotFolder, ImagesNotFound
 
 
@@ -14,16 +14,13 @@ def main():
         sys.exit(1)
 
     try:
-        images = path_collector.get_all_paths_to_images(cli_args.path.rglob("*"))
+        images = file_sorter.find_images(cli_args.path.rglob("*"))
     except ImagesNotFound:
         sys.stderr.write("Images not found.\n")
         sys.exit(1)
 
-    folder_to_save = path_handler.generate_path_to_save(cli_args.path)
-
-    image_converter.convert(
-        target_path=cli_args.path,
-        path_to_save=folder_to_save,
+    image_converter.run(
+        target_folder=cli_args.path,
         images=images,
         quality=cli_args.quality,
     )
