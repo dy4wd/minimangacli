@@ -1,17 +1,17 @@
 import sys
 
-from . import cli, path_handler, file_sorter, image_converter
-from .exceptions import SpecifiedPathNotFolder, ImagesNotFound
+from . import cli, file_sorter, image_converter
+from .exceptions import ImagesNotFound
 
 
 def main():
     cli_args = cli.get_arguments()
 
-    try:
-        path_handler.is_dir(cli_args.path)
-    except SpecifiedPathNotFolder:
+    if not cli_args.path.is_dir():
         sys.stderr.write("The specified path is not a folder.\n")
         sys.exit(1)
+    else:
+        folder = cli_args.path
 
     try:
         images = file_sorter.find_images(cli_args.path.rglob("*"))

@@ -2,12 +2,6 @@ from pathlib import Path
 from typing import Callable
 
 from . import config
-from .exceptions import SpecifiedPathNotFolder
-
-
-def is_dir(path: Path):
-    if not path.is_dir():
-        raise SpecifiedPathNotFolder
 
 
 def create_path_to_dist_folder(target_folder: Path) -> Path:

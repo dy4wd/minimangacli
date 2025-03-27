@@ -1,13 +1,13 @@
 import sys
 
 from pathlib import Path
-from typing import Generator, Sequence
+from typing import Iterator, Sequence
 
 from . import config
 from .exceptions import ImagesNotFound
 
 
-Files = Generator[Path, None, None]
+Files = Iterator[Path]
 Images = Sequence[Path]
 
 
