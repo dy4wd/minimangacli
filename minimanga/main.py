@@ -1,7 +1,6 @@
 import sys
 
-from . import cli, file_sorter, image_converter
-from .exceptions import ImagesNotFound
+from . import cli, config, sorter, image_converter
 
 
 def main():
@@ -13,17 +12,16 @@ def main():
     else:
         folder = cli_args.path
 
-    try:
-        images = file_sorter.find_images(cli_args.path.rglob("*"))
-    except ImagesNotFound:
-        sys.stderr.write("Images not found.\n")
-        sys.exit(1)
-
-    image_converter.run(
-        target_folder=cli_args.path,
-        images=images,
-        quality=cli_args.quality,
-    )
+    if cli_args.is_extraction:
+        archives = sorter.find_all(folder.rglob("*"), config.ARCHIVES_SUFFIXES, "Archives")
+        print(archives)
+    else:
+        images = sorter.find_all(folder.rglob("*"), config.IMAGES_SUFFIXES, 'Images')
+        image_converter.run(
+            target_folder=cli_args.path,
+            images=images,
+            quality=cli_args.quality,
+        )
 
 
 if __name__ == "__main__":

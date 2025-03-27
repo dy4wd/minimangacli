@@ -1,14 +1,14 @@
 import sys
 
 from pathlib import Path
+from typing import Sequence
 
 from PIL import Image as Img, ImageFile
 
 from . import config, path_handler
-from .file_sorter import Images
 
 
-def run(target_folder: Path, images: Images, quality: int):
+def run(target_folder: Path, images: Sequence[Path], quality: int):
     for index, image in enumerate(images):
         sys.stdout.write(f"\rConvert image {index+1} of {len(images)}")
         dist_folder = path_handler.create_path_to_dist_folder(target_folder)
