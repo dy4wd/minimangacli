@@ -15,7 +15,11 @@ class CLIArguments:
 
 def get_arguments() -> CLIArguments:
     cli_args = _create_command_line_argument_parser()
-    return CLIArguments(path=cli_args.path.absolute(), quality=cli_args.quality, is_extraction=cli_args.is_extraction)
+    return CLIArguments(
+        path=cli_args.path.absolute(),
+        quality=cli_args.quality,
+        is_extraction=cli_args.is_extraction,
+    )
 
 
 def _create_command_line_argument_parser() -> argparse.Namespace:

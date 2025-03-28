@@ -18,7 +18,7 @@ def find_all(files: Files, pattern: Pattern, msg: str) -> Targets:
     except TargetNotFound:
         sys.stderr.write(f"{msg} not found.\n")
         exit(1)
-    sys.stdout.write(f"{msg} search... Done.\n")
+    sys.stdout.write(f"Done.\n")
     return targets
 
 

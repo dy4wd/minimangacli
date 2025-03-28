@@ -1,6 +1,6 @@
 import sys
 
-from . import cli, config, sorter, image_converter
+from . import cli, archives_handler, images_handler
 
 
 def main():
@@ -13,15 +13,10 @@ def main():
         folder = cli_args.path
 
     if cli_args.is_extraction:
-        archives = sorter.find_all(folder.rglob("*"), config.ARCHIVES_SUFFIXES, "Archives")
-        print(archives)
+        archives_handler.unpack(folder)
+        images_handler.convert(folder, cli_args.quality)
     else:
-        images = sorter.find_all(folder.rglob("*"), config.IMAGES_SUFFIXES, 'Images')
-        image_converter.run(
-            target_folder=cli_args.path,
-            images=images,
-            quality=cli_args.quality,
-        )
+        images_handler.convert(folder, cli_args.quality)
 
 
 if __name__ == "__main__":
