@@ -7,7 +7,7 @@ from PIL import Image as Img, ImageFile
 from .. import config, search
 
 
-class ImageHandler():
+class ImageHandler:
     def __init__(self, folder: Path, quality: int):
         self._folder = folder
         self._quality = quality

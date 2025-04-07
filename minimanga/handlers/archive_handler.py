@@ -16,7 +16,7 @@ class ArchiveType(str, Enum):
     CBR = "cbr"
 
 
-class ArchiveHandler():
+class ArchiveHandler:
     def __init__(self, folder: Path):
         self._folder = folder
         self._suffixes = ("zip", "cbz", "rar", "cbr")
@@ -33,17 +33,17 @@ class ArchiveHandler():
                 case _:
                     break
 
-    def _extract_zip(self, archive:Path):
+    def _extract_zip(self, archive: Path):
         with ZipFile(archive) as zipfile_:
             dist = self._get_dist_folder(archive, zipfile_.namelist()[-1].strip("/"))
             zipfile_.extractall(path=dist)
 
-    def _extract_rar(self, archive:Path):
+    def _extract_rar(self, archive: Path):
         with RarFile(archive) as rarfile_:
             dist = self._get_dist_folder(archive, rarfile_.namelist()[-1].strip("/"))
             rarfile_.extractall(path=dist)
 
-    def _get_dist_folder(self, archive:Path, inner_folder:str) -> Path:
+    def _get_dist_folder(self, archive: Path, inner_folder: str) -> Path:
         if archive.stem == inner_folder:
             return archive.parent
         return Path(archive.parent, archive.stem)
