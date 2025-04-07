@@ -4,8 +4,7 @@ from pathlib import Path
 
 from PIL import Image as Img, ImageFile
 
-from .. import config, sorter
-from ..exceptions import TargetNotFound
+from .. import config, search
 
 
 class ImageHandler():
@@ -13,18 +12,8 @@ class ImageHandler():
         self._folder = folder
         self._quality = quality
         self._suffixes = ("jpeg", "jpg", "png", "webp")
-        self._images = self._find_all()
+        self._images = search.find_all(self._folder, self._suffixes)
         self._dist = self._get_dist_folder()
-
-    def _find_all(self) -> sorter.Targets:
-        sys.stdout.write(f"Images search...\n")
-        try:
-            images = sorter.find_all(self._folder.rglob("*"), self._suffixes)
-        except TargetNotFound:
-            sys.stderr.write("Images not found.\n")
-            exit(1)
-        sys.stdout.write(f"Done\n")
-        return images
 
     def optimize(self):
         for index, image in enumerate(self._images):

@@ -1,8 +1,8 @@
 import sys
 
 from . import cli
-from .handlers.archive import ArchiveHandler
-from .handlers.image import ImageHandler
+from .handlers.archive_handler import ArchiveHandler
+from .handlers.image_handler import ImageHandler
 
 
 def main():

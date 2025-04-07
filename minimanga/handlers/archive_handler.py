@@ -1,13 +1,12 @@
-from enum import Enum
 import sys
 
+from enum import Enum
 from pathlib import Path
-from zipfile import ZipFile
 
+from zipfile import ZipFile
 from rarfile import RarFile
 
-from .. import sorter
-from ..exceptions import TargetNotFound
+from .. import search
 
 
 class ArchiveType(str, Enum):
@@ -21,17 +20,7 @@ class ArchiveHandler():
     def __init__(self, folder: Path):
         self._folder = folder
         self._suffixes = ("zip", "cbz", "rar", "cbr")
-        self._archives = self._find_all()
-
-    def _find_all(self) -> sorter.Targets:
-        sys.stdout.write(f"Archive search...\n")
-        try:
-            archives = sorter.find_all(self._folder.rglob("*"), self._suffixes)
-        except TargetNotFound:
-            sys.stderr.write("Archives not found.\n")
-            exit(1)
-        sys.stdout.write(f"Done\n")
-        return archives
+        self._archives = search.find_all(self._folder, self._suffixes)
 
     def unpack(self):
         for archive in self._archives:
