@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Callable
 
-from . import config
+from .. import config
 
 
 def create_path_to_dist_folder(target_folder: Path) -> Path:
