@@ -1,6 +1,8 @@
 import sys
 
-from . import cli, archives_handler, images_handler
+from . import cli
+from .handlers import image
+from .handlers.archive import ArchiveHandler
 
 
 def main():
@@ -13,10 +15,10 @@ def main():
         folder = cli_args.path
 
     if cli_args.is_extraction:
-        archives_handler.unpack(folder)
-        images_handler.convert(folder, cli_args.quality)
+        ArchiveHandler(folder).unpack()
+        image.convert(folder, cli_args.quality)
     else:
-        images_handler.convert(folder, cli_args.quality)
+        image.convert(folder, cli_args.quality)
 
 
 if __name__ == "__main__":
