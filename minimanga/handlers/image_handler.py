@@ -20,7 +20,6 @@ class ImageHandler:
             sys.stdout.write(f"\rProcessing image {index+1} out of {len(self._images)}")
             save_as = self._create_path_to_save_image(image)
             self._convert_image(image, save_as)
-        sys.stdout.write(f"\nDone.\n")
 
     def _set_dist_folder(self) -> Path:
         return self._folder.with_name(f"{self._folder.name}{config.SUFFIX_DIST_FOLDER}")

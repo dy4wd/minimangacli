@@ -20,6 +20,7 @@ def main():
         trash.clean()
     else:
         ImageHandler(folder, cli_args.quality).optimize()
+    sys.stdout.write("\nDone\n")
 
 
 if __name__ == "__main__":

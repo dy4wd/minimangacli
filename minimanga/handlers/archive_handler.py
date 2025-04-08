@@ -25,7 +25,7 @@ class ArchiveHandler:
 
     def unpack(self):
         for archive in self._archives:
-            sys.stdout.write(f"Unpacking: {archive.name}...\n")
+            sys.stdout.write(f"Unpacking: {archive.name}\n")
             suffix = archive.suffix[1:]
             self._dist = self._set_dist_folder(archive)
             match suffix:
