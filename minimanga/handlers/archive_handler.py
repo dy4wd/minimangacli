@@ -25,13 +25,15 @@ class ArchiveHandler:
     def unpack(self):
         for archive in self._archives:
             sys.stdout.write(f"Unpacking: {archive.name}...\n")
-            match archive.suffix[1:]:
+            suffix = archive.suffix[1:]
+            match suffix:
                 case ArchiveType.ZIP | ArchiveType.CBZ:
                     self._extract_zip(archive)
                 case ArchiveType.RAR | ArchiveType.CBR:
                     self._extract_rar(archive)
                 case _:
-                    break
+                    sys.stderr.write(f"\"{suffix}\" is an unknown archive type.\n")
+                    exit(1)
 
     def _extract_zip(self, archive: Path):
         with ZipFile(archive) as zipfile_:
