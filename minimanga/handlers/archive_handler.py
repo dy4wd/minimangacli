@@ -6,7 +6,7 @@ from pathlib import Path
 from zipfile import ZipFile
 from rarfile import RarFile
 
-from .. import search
+from .. import search, config
 
 
 class ArchiveType(str, Enum):
@@ -19,6 +19,7 @@ class ArchiveType(str, Enum):
 class ArchiveHandler:
     def __init__(self, folder: Path):
         self._folder = folder
+        self._dist: Path | None = None
         self._suffixes = ("zip", "cbz", "rar", "cbr")
         self._archives = search.find_all(self._folder, self._suffixes)
 
@@ -26,6 +27,7 @@ class ArchiveHandler:
         for archive in self._archives:
             sys.stdout.write(f"Unpacking: {archive.name}...\n")
             suffix = archive.suffix[1:]
+            self._dist = self._set_dist_folder(archive)
             match suffix:
                 case ArchiveType.ZIP | ArchiveType.CBZ:
                     self._extract_zip(archive)
@@ -35,17 +37,19 @@ class ArchiveHandler:
                     sys.stderr.write(f"\"{suffix}\" is an unknown archive type.\n")
                     exit(1)
 
+    def _set_dist_folder(self, archive: Path) -> Path:
+        return Path(archive.parent, archive.stem)
+
     def _extract_zip(self, archive: Path):
         with ZipFile(archive) as zipfile_:
-            dist = self._get_dist_folder(archive, zipfile_.namelist()[-1].strip("/"))
-            zipfile_.extractall(path=dist)
+            zipfile_.extractall(path=self._dist)
+            self._in_trash(str(self._dist))
 
     def _extract_rar(self, archive: Path):
         with RarFile(archive) as rarfile_:
-            dist = self._get_dist_folder(archive, rarfile_.namelist()[-1].strip("/"))
-            rarfile_.extractall(path=dist)
+            rarfile_.extractall(path=self._dist)
+            self._in_trash(str(self._dist))
 
-    def _get_dist_folder(self, archive: Path, inner_folder: str) -> Path:
-        if archive.stem == inner_folder:
-            return archive.parent
-        return Path(archive.parent, archive.stem)
+    def _in_trash(self, path: str):
+        with open(config.TRASH_FILE, "a") as file:
+            file.write(f"{path}\n")
