@@ -29,7 +29,7 @@ class ImageHandler:
         tail = self._remove_duplicates(tail)
         save_as = tail.with_suffix(config.DEFAULT_IMAGE_SUFFIX)
         return Path(self._dist, save_as)
-    
+
     def _remove_duplicates(self, tail: Path) -> Path:
         parts = tail.parts
         if parts[0] in parts[1:]:

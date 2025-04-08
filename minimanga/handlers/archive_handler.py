@@ -34,7 +34,7 @@ class ArchiveHandler:
                 case ArchiveType.RAR | ArchiveType.CBR:
                     self._extract_rar(archive)
                 case _:
-                    sys.stderr.write(f"\"{suffix}\" is an unknown archive type.\n")
+                    sys.stderr.write(f'"{suffix}" is an unknown archive type.\n')
                     exit(1)
 
     def _set_dist_folder(self, archive: Path) -> Path:
