@@ -13,7 +13,7 @@ class ImageHandler:
         self._quality = quality
         self._suffixes = ("jpeg", "jpg", "png", "webp")
         self._images = search.find_all(self._folder, self._suffixes)
-        self._dist = self._get_dist_folder()
+        self._dist = self._set_dist_folder()
 
     def optimize(self):
         for index, image in enumerate(self._images):
@@ -22,13 +22,20 @@ class ImageHandler:
             self._convert_image(image, save_as)
         sys.stdout.write(f"\nDone.\n")
 
-    def _get_dist_folder(self) -> Path:
+    def _set_dist_folder(self) -> Path:
         return self._folder.with_name(f"{self._folder.name}{config.SUFFIX_DIST_FOLDER}")
 
     def _create_path_to_save_image(self, image: Path) -> Path:
         tail = image.relative_to(self._folder)
+        tail = self._remove_duplicates(tail)
         save_as = tail.with_suffix(config.DEFAULT_IMAGE_SUFFIX)
         return Path(self._dist, save_as)
+    
+    def _remove_duplicates(self, tail: Path) -> Path:
+        parts = tail.parts
+        if parts[0] in parts[1:]:
+            return Path(*parts[1:])
+        return Path(*parts)
 
     def _convert_image(self, image: Path, save_as: Path):
         with Img.open(image) as img:
