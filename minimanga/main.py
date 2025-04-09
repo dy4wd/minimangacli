@@ -1,6 +1,6 @@
 import sys
 
-from . import cli, trash
+from . import cli
 from .handlers.archive_handler import ArchiveHandler
 from .handlers.image_handler import ImageHandler
 
@@ -15,9 +15,10 @@ def main():
         folder = cli_args.path
 
     if cli_args.is_extraction:
-        ArchiveHandler(folder).unpack()
+        archives = ArchiveHandler(folder)
+        archives.unpack()
         ImageHandler(folder, cli_args.quality).optimize()
-        trash.clean()
+        archives.clean()
     else:
         ImageHandler(folder, cli_args.quality).optimize()
     sys.stdout.write("\nDone\n")

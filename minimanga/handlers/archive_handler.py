@@ -2,6 +2,7 @@ import sys
 import shutil
 
 from enum import Enum
+from typing import List
 from pathlib import Path
 
 from zipfile import ZipFile
@@ -19,40 +20,39 @@ class ArchiveType(str, Enum):
 
 class ArchiveHandler:
     def __init__(self, folder: Path):
-        self._folder = folder
-        self._suffixes = ("zip", "cbz", "rar", "cbr")
-        self._trash = []
+        self.__folder = folder
+        self.__suffixes = ("zip", "cbz", "rar", "cbr")
+        self.__trash: List[Path] = []
 
     def unpack(self):
-        archives = search.find_all(self._folder, self._suffixes)
+        archives = search.find_all(self.__folder, self.__suffixes)
         for archive in archives:
             sys.stdout.write(f"Unpacking: {archive.name}\n")
             suffix = archive.suffix[1:]
-            dist = self._set_dist_folder(archive)
+            dist = self.__set_dist_folder(archive)
             match suffix:
                 case ArchiveType.ZIP | ArchiveType.CBZ:
-                    self._extract_zip(archive, dist)
+                    self.__extract_zip(archive, dist)
                 case ArchiveType.RAR | ArchiveType.CBR:
-                    self._extract_rar(archive, dist)
+                    self.__extract_rar(archive, dist)
                 case _:
                     sys.stderr.write(f'"{suffix}" is an unknown archive type.\n')
                     exit(1)
-        self._clean()
 
-    def _set_dist_folder(self, archive: Path) -> Path:
+    def __set_dist_folder(self, archive: Path) -> Path:
         return Path(archive.parent, archive.stem)
 
-    def _extract_zip(self, archive: Path, dist: Path):
+    def __extract_zip(self, archive: Path, dist: Path):
         with ZipFile(archive) as zipfile_:
             zipfile_.extractall(path=dist)
-            self._trash.append(dist)
+            self.__trash.append(dist)
 
-    def _extract_rar(self, archive: Path, dist: Path):
+    def __extract_rar(self, archive: Path, dist: Path):
         with RarFile(archive) as rarfile_:
             rarfile_.extractall(path=dist)
-            self._trash.append(dist)
+            self.__trash.append(dist)
 
-    def _clean(self):
+    def clean(self):
         sys.stdout.write("\nDeleting folders after unpacking.")
-        for item in self._trash:
+        for item in self.__trash:
             shutil.rmtree(item)
