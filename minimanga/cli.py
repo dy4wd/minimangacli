@@ -3,8 +3,6 @@ import argparse
 from pathlib import Path
 from dataclasses import dataclass
 
-from . import config
-
 
 @dataclass(frozen=True, slots=True)
 class CLIArguments:
@@ -12,6 +10,7 @@ class CLIArguments:
     quality: int
     is_extraction: bool
 
+QUALITY = 75
 
 def get_arguments() -> CLIArguments:
     cli_args = _create_command_line_argument_parser()
@@ -30,5 +29,5 @@ def _create_command_line_argument_parser() -> argparse.Namespace:
 
 def _add_arguments_to_parser(parser: argparse.ArgumentParser):
     parser.add_argument("path", type=Path)
-    parser.add_argument("-q", "--quality", type=int, default=config.QUALITY)
+    parser.add_argument("-q", "--quality", type=int, default=QUALITY)
     parser.add_argument("-x", dest="is_extraction", action="store_true")

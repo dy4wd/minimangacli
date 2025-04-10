@@ -19,13 +19,14 @@ class ArchiveType(str, Enum):
 
 
 class ArchiveHandler:
+    __SUFFIXES = ("zip", "cbz", "rar", "cbr")
+
     def __init__(self, folder: Path):
         self.__folder = folder
-        self.__suffixes = ("zip", "cbz", "rar", "cbr")
         self.__trash: List[Path] = []
 
     def unpack(self):
-        archives = search.find_all(self.__folder, self.__suffixes)
+        archives = search.find_all(self.__folder, self.__SUFFIXES)
         for archive in archives:
             sys.stdout.write(f"Unpacking: {archive.name}\n")
             suffix = archive.suffix[1:]
