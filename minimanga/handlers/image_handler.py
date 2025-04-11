@@ -29,7 +29,7 @@ class ImageHandler:
     def __create_path_to_save_image(self, image: Path) -> Path:
         tail = image.relative_to(self.__source_folder)
         tail = self.__remove_duplicates_in_path(tail)
-        save_as = tail.with_suffix(self.__WEBP)
+        save_as = tail.with_suffix(f".{self.__WEBP}")
         return Path(self.__result_folder, save_as)
 
     def __remove_duplicates_in_path(self, tail: Path) -> Path:
