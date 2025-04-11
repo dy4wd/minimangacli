@@ -7,6 +7,7 @@ from .handlers.image_handler import ImageHandler
 
 SUFFIX_RESULT_FOLDER = "_mini"
 
+
 def main():
     cli_args = cli.get_arguments()
 
@@ -16,7 +17,9 @@ def main():
     else:
         source_folder = cli_args.path
 
-    result_folder = source_folder.with_name(f"{source_folder.name}{SUFFIX_RESULT_FOLDER}")
+    result_folder = source_folder.with_name(
+        f"{source_folder.name}{SUFFIX_RESULT_FOLDER}"
+    )
 
     if cli_args.is_extraction:
         archives = ArchiveHandler(source_folder)

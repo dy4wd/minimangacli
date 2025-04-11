@@ -10,7 +10,9 @@ class CLIArguments:
     quality: int
     is_extraction: bool
 
+
 QUALITY = 75
+
 
 def get_arguments() -> CLIArguments:
     cli_args = _create_command_line_argument_parser()
