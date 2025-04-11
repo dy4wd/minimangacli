@@ -8,10 +8,10 @@ from dataclasses import dataclass
 class CLIArguments:
     path: Path
     quality: int
-    is_extraction: bool
+    is_archives: bool
 
 
-QUALITY = 75
+_QUALITY = 75
 
 
 def get_arguments() -> CLIArguments:
@@ -19,7 +19,7 @@ def get_arguments() -> CLIArguments:
     return CLIArguments(
         path=cli_args.path.absolute(),
         quality=cli_args.quality,
-        is_extraction=cli_args.is_extraction,
+        is_archives=cli_args.is_archives,
     )
 
 
@@ -31,5 +31,5 @@ def _create_command_line_argument_parser() -> argparse.Namespace:
 
 def _add_arguments_to_parser(parser: argparse.ArgumentParser):
     parser.add_argument("path", type=Path)
-    parser.add_argument("-q", "--quality", type=int, default=QUALITY)
-    parser.add_argument("-x", dest="is_extraction", action="store_true")
+    parser.add_argument("-q", "--quality", type=int, default=_QUALITY)
+    parser.add_argument("-a", dest="is_archives", action="store_true")

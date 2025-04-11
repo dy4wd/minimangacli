@@ -21,7 +21,7 @@ def main():
         f"{source_folder.name}{SUFFIX_RESULT_FOLDER}"
     )
 
-    if cli_args.is_extraction:
+    if cli_args.is_archives:
         archives = ArchiveHandler(source_folder)
         archives.unpack()
         ImageHandler(source_folder, result_folder, cli_args.quality).optimize()
