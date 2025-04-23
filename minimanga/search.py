@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 from typing import Iterator, Sequence, Tuple
 
-from .exceptions import TargetNotFound
+from minimanga.exceptions import TargetNotFound
 
 
 Files = Iterator[Path]
@@ -23,7 +23,7 @@ def find_all(folder: Path, condition: Condition) -> Targets:
 def _to_find(files: Files, condition: Condition) -> Targets:
     targets = []
     for file in files:
-        if file.suffix[1:].lower() in condition:
+        if file.suffix.lower() in condition:
             targets.append(file)
     if len(targets) == 0:
         raise TargetNotFound

@@ -1,11 +1,8 @@
 import sys
 
-from . import cli
-from .handlers.archive_handler import ArchiveHandler
-from .handlers.image_handler import ImageHandler
-
-
-SUFFIX_RESULT_FOLDER = "_mini"
+from minimanga import cli, config
+from minimanga.archive_handler import ArchiveHandler
+from minimanga.image_handler import ImageHandler
 
 
 def main():
@@ -18,15 +15,12 @@ def main():
         source_folder = cli_args.path
 
     result_folder = source_folder.with_name(
-        f"{source_folder.name}{SUFFIX_RESULT_FOLDER}"
+        f"{source_folder.name}{config.SUFFIX_RESULT_FOLDER}"
     )
 
     if cli_args.is_archives:
-        archives = ArchiveHandler(source_folder)
-        archives.unpack()
-        ImageHandler(source_folder, result_folder, cli_args.quality).optimize()
-        archives.clean()
+        ArchiveHandler(source_folder, result_folder, cli_args.quality).start()
     else:
-        ImageHandler(source_folder, result_folder, cli_args.quality).optimize()
+        ImageHandler(source_folder, result_folder, cli_args.quality).start()
 
     sys.stdout.write("\nDone\n")
