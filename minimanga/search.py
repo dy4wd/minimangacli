@@ -13,9 +13,9 @@ Targets = Sequence[Path]
 
 def find_all(folder: Path, condition: Condition) -> Targets:
     try:
-        targets = _to_find(folder.rglob("*"), condition)
+        targets = _to_find(folder.rglob('*'), condition)
     except TargetNotFound:
-        sys.stderr.write("Nothing was found.\n")
+        sys.stderr.write('Nothing was found.\n')
         exit(1)
     return targets
 
