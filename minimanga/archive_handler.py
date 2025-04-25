@@ -1,6 +1,5 @@
 import sys
 
-from enum import Enum
 from pathlib import Path
 from collections.abc import Sequence
 
@@ -9,15 +8,14 @@ from minimanga.exceptions import UnknownArchiveType
 from minimanga.image_handler import ImageHandler
 
 
-class ArchiveType(str, Enum):
-    ZIP = 'zip'
-    RAR = 'rar'
-    CBZ = 'cbz'
-    CBR = 'cbr'
-
-
 class ArchiveHandler:
-    def __init__(self, source_folder: Path, result_folder: Path, format_:str, quality: int):
+    def __init__(
+        self,
+        source_folder: Path,
+        result_folder: Path,
+        format_: str,
+        quality: int,
+    ):
         self._source_folder = source_folder
         self._result_folder = result_folder
         self._format = format_
@@ -35,7 +33,10 @@ class ArchiveHandler:
             sys.stderr.write('Unknown archive type.\n')
             exit(1)
         ImageHandler(
-            self._unpacking_folder, self._result_folder, self._format, self._quality
+            self._unpacking_folder,
+            self._result_folder,
+            self._format,
+            self._quality,
         ).start()
 
     def _get_all_archives(self) -> list[Path]:
@@ -52,11 +53,5 @@ class ArchiveHandler:
             path = Path(
                 self._unpacking_folder, archive.parent.name, archive.stem
             )
-            match archive.suffix[1:]:
-                case ArchiveType.ZIP | ArchiveType.CBZ:
-                    archives.extract_zip(archive, path=path)
-                case ArchiveType.RAR | ArchiveType.CBR:
-                    archives.extract_rar(archive, path=path)
-                case _:
-                    raise UnknownArchiveType
+            archives.unpack(archive, path)
         sys.stdout.write('\n')

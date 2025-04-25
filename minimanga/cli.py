@@ -32,6 +32,12 @@ def _create_command_line_argument_parser() -> argparse.Namespace:
 
 def _add_arguments_to_parser(parser: argparse.ArgumentParser):
     parser.add_argument('path', type=Path)
-    parser.add_argument('-f', '--format', type=str, choices=['webp', 'avif', 'jpeg'], default='webp')
+    parser.add_argument(
+        '-f',
+        '--format',
+        type=str,
+        choices=['webp', 'avif', 'jpeg'],
+        default='webp',
+    )
     parser.add_argument('-q', '--quality', type=int, default=config.QUALITY)
     parser.add_argument('-a', dest='is_archives', action='store_true')

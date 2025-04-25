@@ -9,8 +9,15 @@ from minimanga import search
 
 MAX_SIZE_WEBP = 16383
 
+
 class ImageHandler:
-    def __init__(self, source_folder: Path, result_folder: Path, format_: str, quality: int):
+    def __init__(
+        self,
+        source_folder: Path,
+        result_folder: Path,
+        format_: str,
+        quality: int,
+    ):
         self._source_folder = source_folder
         self._result_folder = result_folder
         self._format = format_
