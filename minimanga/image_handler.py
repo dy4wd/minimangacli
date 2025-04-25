@@ -36,15 +36,8 @@ class ImageHandler:
 
     def _create_path_to_save_image(self, image: Path) -> Path:
         tail = image.relative_to(self._source_folder)
-        tail = self._remove_duplicates_in_path(tail)
-        save_as = tail.with_suffix(self._WEBP)
+        save_as = Path(*list(dict.fromkeys(tail.parts).keys())).with_suffix(self._WEBP)
         return Path(self._result_folder, save_as)
-
-    def _remove_duplicates_in_path(self, tail: Path) -> Path:
-        parts = tail.parts
-        if parts[0] in parts[1:]:
-            return Path(*parts[1:])
-        return Path(*parts)
 
     def _convert_image(self, image: Path, save_as: Path):
         with Img.open(image) as img:
