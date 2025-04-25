@@ -1,17 +1,15 @@
 import sys
 
 from pathlib import Path
-from typing import Iterator, Sequence, Tuple
+from collections.abc import Iterator, Sequence
 
 from minimanga.exceptions import TargetNotFound
 
 
-Files = Iterator[Path]
-Condition = Tuple[str, ...]
-Targets = Sequence[Path]
+Condition = Sequence[str]
 
 
-def find_all(folder: Path, condition: Condition) -> Targets:
+def find_all(folder: Path, condition: Condition) -> list[Path]:
     try:
         targets = _to_find(folder.rglob('*'), condition)
     except TargetNotFound:
@@ -20,7 +18,7 @@ def find_all(folder: Path, condition: Condition) -> Targets:
     return targets
 
 
-def _to_find(files: Files, condition: Condition) -> Targets:
+def _to_find(files: Iterator[Path], condition: Condition) -> list[Path]:
     targets = []
     for file in files:
         if file.suffix.lower() in condition:

@@ -2,7 +2,7 @@ import sys
 
 from enum import Enum
 from pathlib import Path
-from typing import Sequence
+from collections.abc import Sequence
 
 from minimanga import search, archives, config
 from minimanga.exceptions import UnknownArchiveType
@@ -16,13 +16,11 @@ class ArchiveType(str, Enum):
     CBR = 'cbr'
 
 
-Files = Sequence[Path]
-
-
 class ArchiveHandler:
-    def __init__(self, source_folder: Path, result_folder: Path, quality: int):
+    def __init__(self, source_folder: Path, result_folder: Path, format_:str, quality: int):
         self._source_folder = source_folder
         self._result_folder = result_folder
+        self._format = format_
         self._quality = quality
         self._unpacking_folder = Path(
             self._source_folder.parent,
@@ -37,15 +35,15 @@ class ArchiveHandler:
             sys.stderr.write('Unknown archive type.\n')
             exit(1)
         ImageHandler(
-            self._unpacking_folder, self._result_folder, self._quality
+            self._unpacking_folder, self._result_folder, self._format, self._quality
         ).start()
 
-    def _get_all_archives(self) -> Files:
+    def _get_all_archives(self) -> list[Path]:
         sys.stdout.write('Archive search...\n')
-        suffixes = ('.zip', '.cbz', '.rar', '.cbr')
+        suffixes = '.zip .cbz .rar .cbr'.split()
         return search.find_all(self._source_folder, suffixes)
 
-    def _unpack(self, archives_: Files):
+    def _unpack(self, archives_: Sequence[Path]):
         total_archives = len(archives_)
         for index, archive in enumerate(archives_):
             sys.stdout.write(
