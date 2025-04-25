@@ -19,8 +19,8 @@ def main():
     )
 
     if cli_args.is_archives:
-        ArchiveHandler(source_folder, result_folder, cli_args.quality).start()
+        ArchiveHandler(source_folder, result_folder, cli_args.format_, cli_args.quality).start()
     else:
-        ImageHandler(source_folder, result_folder, cli_args.quality).start()
+        ImageHandler(source_folder, result_folder, cli_args.format_, cli_args.quality).start()
 
     sys.stdout.write('\nDone\n')

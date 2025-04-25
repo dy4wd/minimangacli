@@ -41,13 +41,13 @@ class ImageHandler:
     def _create_path_to_save_image(self, image: Path) -> Path:
         tail = image.relative_to(self._source_folder)
         save_as = Path(*list(dict.fromkeys(tail.parts).keys())).with_suffix(
-            self._format
+            f'.{self._format}'
         )
         return Path(self._result_folder, save_as)
 
     def _convert_image(self, image: Path, save_as: Path):
         with Img.open(image) as img:
-            if max(img.size) > MAX_SIZE_WEBP:
+            if self._format == 'webp' and max(img.size) > MAX_SIZE_WEBP:
                 self._save_image(img, save_as.with_suffix('.jpeg'))
             else:
                 self._save_image(img, save_as)
@@ -55,5 +55,5 @@ class ImageHandler:
     def _save_image(self, imagefile: ImageFile.ImageFile, save_as: Path):
         save_as.parent.mkdir(parents=True, exist_ok=True)
         imagefile.save(
-            save_as, format=save_as.suffix[1:], quality=self._quality
+            save_as, format=self._format, quality=self._quality
         )
