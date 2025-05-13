@@ -4,27 +4,17 @@ from pathlib import Path
 
 from PIL import Image as Img, ImageFile
 
-from minimanga import search
+from minimanga.handler import Handler
 
 
 MAX_SIZE_WEBP = 16383
 
 
-class ImageHandler:
-    def __init__(
-        self,
-        source_folder: Path,
-        result_folder: Path,
-        format_: str,
-        quality: int,
-    ):
-        self._source_folder = source_folder
-        self._result_folder = result_folder
-        self._format = format_
-        self._quality = quality
+class ImageHandler(Handler):
+    __suffixes__ = ['.webp', '.jpeg', '.jpg', '.png', '.avif']
 
     def start(self):
-        images = self._get_all_images()
+        images = self._get_all_files()
         total_images = len(images)
         for index, image in enumerate(images):
             sys.stdout.write(
@@ -32,11 +22,6 @@ class ImageHandler:
             )
             save_as = self._create_path_to_save_image(image)
             self._convert_image(image, save_as)
-
-    def _get_all_images(self) -> list[Path]:
-        sys.stdout.write('Image search...\n')
-        suffixes = '.webp .jpeg .jpg .png .avif'.split()
-        return search.find_all(self._source_folder, suffixes)
 
     def _create_path_to_save_image(self, image: Path) -> Path:
         tail = image.relative_to(self._source_folder)
