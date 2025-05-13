@@ -23,7 +23,7 @@ def main():
         source_folder=source_folder,
         result_folder=result_folder,
         format_=cli_args.format_,
-        quality=cli_args.quality
+        quality=cli_args.quality,
     )
 
     if cli_args.is_archives:

@@ -27,12 +27,14 @@ class ArchiveHandler(Handler):
         except UnknownArchiveType:
             sys.stderr.write('Unknown archive type.\n')
             exit(1)
-        ImageHandler(HandlerArgs(
-            source_folder=self._unpacking_folder,
-            result_folder=self._result_folder,
-            format_=self._format,
-            quality=self._quality
-        )).start()
+        ImageHandler(
+            HandlerArgs(
+                source_folder=self._unpacking_folder,
+                result_folder=self._result_folder,
+                format_=self._format,
+                quality=self._quality,
+            )
+        ).start()
         self._clear()
 
     def _unpack(self, archives_: Sequence[Path]):

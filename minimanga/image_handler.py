@@ -39,6 +39,4 @@ class ImageHandler(Handler):
 
     def _save_image(self, imagefile: ImageFile.ImageFile, save_as: Path):
         save_as.parent.mkdir(parents=True, exist_ok=True)
-        imagefile.save(
-            save_as, format=self._format, quality=self._quality
-        )
+        imagefile.save(save_as, format=self._format, quality=self._quality)
