@@ -9,7 +9,7 @@ from minimanga import config
 @dataclass(frozen=True, slots=True)
 class CLIArguments:
     path: Path
-    format_: str
+    format: str
     quality: int
     is_archives: bool
 
@@ -18,7 +18,7 @@ def get_arguments() -> CLIArguments:
     cli_args = _create_command_line_argument_parser()
     return CLIArguments(
         path=cli_args.path.absolute(),
-        format_=cli_args.format,
+        format=cli_args.format,
         quality=cli_args.quality,
         is_archives=cli_args.is_archives,
     )

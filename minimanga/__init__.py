@@ -1,9 +1,7 @@
 import sys
 
-from minimanga import cli, config
-from minimanga.handler import HandlerArgs
-from minimanga.archive_handler import ArchiveHandler
-from minimanga.image_handler import ImageHandler
+from minimanga import cli, config, archives, images
+from minimanga.state import State
 
 
 def main():
@@ -19,16 +17,16 @@ def main():
         f'{source_folder.name}{config.SUFFIX_RESULT_FOLDER}'
     )
 
-    handler_args = HandlerArgs(
-        source_folder=source_folder,
-        result_folder=result_folder,
-        format_=cli_args.format_,
+    state = State(
+        from_=source_folder,
+        to=result_folder,
+        format=cli_args.format,
         quality=cli_args.quality,
     )
 
     if cli_args.is_archives:
-        ArchiveHandler(handler_args).start()
+        archives.reduce(state)
     else:
-        ImageHandler(handler_args).start()
+        images.reduce(state)
 
     sys.stdout.write('\nDone\n')
