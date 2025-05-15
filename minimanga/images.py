@@ -12,12 +12,12 @@ SUFFIXES = ['.webp', '.jpeg', '.jpg', '.png', '.avif']
 
 
 def reduce(state: State):
-    images = search.find_all(state.from_, SUFFIXES)
+    images = search.find_all(state.source, SUFFIXES)
     total_images = len(images)
     for index, image in enumerate(images):
         sys.stdout.write(f'\rProcessing image {index+1} out of {total_images}')
         save_as = _generate_path_to_save(
-            state.from_, state.to, image, state.format
+            state.source, state.result, image, state.format
         )
         _convert(image, save_as, state.format, state.quality)
 

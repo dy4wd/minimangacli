@@ -24,10 +24,10 @@ SUFFIXES = [f'.{arch.value}' for arch in Archives]
 
 
 def reduce(state: State):
-    source_folder = state.from_
-    state.from_ = result_folder = Path(
-        state.from_.parent,
-        f'{state.from_.name}{config.SUFFIX_UNPACK_FOLDER}',
+    source_folder = state.source
+    state.source = result_folder = Path(
+        state.source.parent,
+        f'{state.source.name}{config.SUFFIX_UNPACK_FOLDER}',
     )
     archives = search.find_all(source_folder, SUFFIXES)
 
@@ -36,6 +36,7 @@ def reduce(state: State):
     except UnknownArchiveType:
         sys.stderr.write('Unknown archive type.\n')
         exit(1)
+
     images.reduce(state)
     _clear(result_folder)
 

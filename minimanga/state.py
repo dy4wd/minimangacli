@@ -3,12 +3,12 @@ from pathlib import Path
 
 class State:
     def __init__(
-        self, from_: Path, to: Path, format: str, quality: int
+        self, source: Path, result: Path, format: str, quality: int
     ) -> None:
-        self.from_ = from_
-        self.to = to
+        self.source = source
+        self.result = result
         self.format = format
         self.quality = quality
 
     def __repr__(self) -> str:
-        return f'State(from={self.from_}, to={self.to}, format={self.format}, quality={self.quality})'
+        return f'State(source={self.source}, result={self.result}, format={self.format}, quality={self.quality})'

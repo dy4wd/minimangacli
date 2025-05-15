@@ -18,8 +18,8 @@ def main():
     )
 
     state = State(
-        from_=source_folder,
-        to=result_folder,
+        source=source_folder,
+        result=result_folder,
         format=cli_args.format,
         quality=cli_args.quality,
     )
