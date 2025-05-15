@@ -22,7 +22,7 @@ def get_arguments() -> CLIArguments:
         format=cli_args.format,
         quality=cli_args.quality,
         is_extract=cli_args.is_extract,
-        is_squeeze=cli_args.is_squeeze
+        is_squeeze=cli_args.is_squeeze,
     )
 
 
@@ -42,5 +42,9 @@ def _add_arguments_to_parser(parser: argparse.ArgumentParser):
         default='webp',
     )
     parser.add_argument('-q', '--quality', type=int, default=config.QUALITY)
-    parser.add_argument('-e', '--extract', dest='is_extract', action='store_true')
-    parser.add_argument('-s', '--squeeze', dest='is_squeeze', action='store_true')
+    parser.add_argument(
+        '-e', '--extract', dest='is_extract', action='store_true'
+    )
+    parser.add_argument(
+        '-s', '--squeeze', dest='is_squeeze', action='store_true'
+    )
