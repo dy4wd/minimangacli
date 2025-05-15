@@ -24,7 +24,7 @@ def main():
         quality=cli_args.quality,
     )
 
-    if cli_args.is_archives:
+    if cli_args.is_extract:
         archives.reduce(state)
     else:
         images.reduce(state)

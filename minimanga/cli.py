@@ -11,7 +11,8 @@ class CLIArguments:
     path: Path
     format: str
     quality: int
-    is_archives: bool
+    is_extract: bool
+    is_squeeze: bool
 
 
 def get_arguments() -> CLIArguments:
@@ -20,7 +21,8 @@ def get_arguments() -> CLIArguments:
         path=cli_args.path.absolute(),
         format=cli_args.format,
         quality=cli_args.quality,
-        is_archives=cli_args.is_archives,
+        is_extract=cli_args.is_extract,
+        is_squeeze=cli_args.is_squeeze
     )
 
 
@@ -40,4 +42,5 @@ def _add_arguments_to_parser(parser: argparse.ArgumentParser):
         default='webp',
     )
     parser.add_argument('-q', '--quality', type=int, default=config.QUALITY)
-    parser.add_argument('-a', dest='is_archives', action='store_true')
+    parser.add_argument('-e', '--extract', dest='is_extract', action='store_true')
+    parser.add_argument('-s', '--squeeze', dest='is_squeeze', action='store_true')
